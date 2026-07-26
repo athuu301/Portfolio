@@ -1,276 +1,531 @@
-// ==========================================================
-// PORTFOLIO SCRIPT
-// Handles: hero typing animation, active-tab tracking,
-// mobile nav toggle, back-to-top, and the contact terminal.
-// ==========================================================
+/* -----------------------
+   GLOBAL
+----------------------- */
 
-document.addEventListener('DOMContentLoaded', () => {
-  setYear();
-  initTypedHero();
-  initTabNav();
-  initMobileMenu();
-  initBackToTop();
-  initContactForm();
-});
-
-/* ----------------------------------------------------------
-   Footer year
----------------------------------------------------------- */
-function setYear() {
-  const yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* ----------------------------------------------------------
-   Hero "typing" code block
-   Builds the code with syntax-highlight spans, then reveals
-   it character by character for a live-editor feel.
----------------------------------------------------------- */
-function initTypedHero() {
-  const target = document.getElementById('typedCode');
-  const cursor = document.getElementById('cursorBlink');
-  if (!target) return;
+html{
+    scroll-behavior:smooth;
+}
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+body{
 
-  // Each line: array of {text, cls} segments. cls maps to CSS accent classes.
-  const lines = [
-    [{ t: 'const ', c: 'kw' }, { t: 'student', c: 'plain' }, { t: ' = {', c: 'plain' }],
-    [{ t: '  name', c: 'key' }, { t: ': ', c: 'plain' }, { t: '"Atharv Gupta"', c: 'str' }, { t: ',', c: 'plain' }],
-    [{ t: '  role', c: 'key' }, { t: ': ', c: 'plain' }, { t: '"Computer Science Student"', c: 'str' }, { t: ',', c: 'plain' }],
-    [{ t: '  location', c: 'key' }, { t: ': ', c: 'plain' }, { t: '"Bangalore, India"', c: 'str' }, { t: ',', c: 'plain' }],
-    [{ t: '  learning', c: 'key' }, { t: ': ', c: 'plain' }, { t: '["JavaScript", "React", "DSA"]', c: 'str' }, { t: ',', c: 'plain' }],
-    [{ t: '  openTo', c: 'key' }, { t: ': ', c: 'plain' }, { t: '"internships & collabs"', c: 'str' }],
-    [{ t: '};', c: 'plain' }],
-  ];
+    background:#090909;
+    color:white;
 
-  const colorMap = {
-    kw: 'var(--accent-keyword)',
-    key: 'var(--accent-func)',
-    str: 'var(--accent-string)',
-    num: 'var(--accent-number)',
-    plain: 'var(--text)',
-  };
+    font-family:Inter,sans-serif;
 
-  if (prefersReducedMotion) {
-    // Render immediately, no animation.
-    target.innerHTML = lines.map(renderLine).join('\n');
-    if (cursor) cursor.style.display = 'none';
-    return;
-  }
+    overflow-x:hidden;
 
-  // Flatten into a single stream of {char, cls} for typing, remembering line breaks.
-  const stream = [];
-  lines.forEach((line, li) => {
-    line.forEach(seg => {
-      for (const ch of seg.t) stream.push({ ch, cls: seg.c });
-    });
-    if (li < lines.length - 1) stream.push({ ch: '\n', cls: 'plain' });
-  });
+}
 
-  let i = 0;
-  let html = '';
-  let openSpan = false;
-  const speed = 16; // ms per character
+/* -----------------------
+   Background Grid
+----------------------- */
 
-  function renderLine(line) {
-    return line.map(seg => `<span style="color:${colorMap[seg.c]}">${escapeHtml(seg.t)}</span>`).join('');
-  }
+body::before{
 
-  function typeNext() {
-    if (i >= stream.length) return;
-    const item = stream[i];
+    content:"";
 
-    if (item.ch === '\n') {
-      if (openSpan) { html += '</span>'; openSpan = false; }
-      html += '\n';
-    } else {
-      // Start a new colored span whenever the class changes, for accuracy just wrap per char group.
-      const prev = stream[i - 1];
-      if (!prev || prev.cls !== item.cls || prev.ch === '\n') {
-        if (openSpan) html += '</span>';
-        html += `<span style="color:${colorMap[item.cls]}">`;
-        openSpan = true;
-      }
-      html += escapeHtml(item.ch);
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+
+    linear-gradient(90deg,
+    rgba(255,255,255,.05) 1px,
+    transparent 1px);
+
+    background-size:60px 60px;
+
+    z-index:-10;
+
+}
+
+/* -----------------------
+   Cursor
+----------------------- */
+
+.cursor{
+
+    width:25px;
+    height:25px;
+
+    position:fixed;
+
+    border-radius:50%;
+
+    background:white;
+
+    mix-blend-mode:difference;
+
+    pointer-events:none;
+
+    transform:translate(-50%,-50%);
+
+    transition:
+    transform .08s linear;
+
+    z-index:1000;
+
+}
+
+/* -----------------------
+   Animated Blobs
+----------------------- */
+
+.blob{
+
+    position:fixed;
+
+    width:450px;
+    height:450px;
+
+    border-radius:50%;
+
+    filter:blur(120px);
+
+    opacity:.35;
+
+    z-index:-2;
+
+}
+
+.blob1{
+
+    background:#7c3aed;
+
+    top:-120px;
+    left:-120px;
+
+    animation:blob1 14s infinite alternate ease-in-out;
+
+}
+
+.blob2{
+
+    background:#06b6d4;
+
+    bottom:-150px;
+    right:-150px;
+
+    animation:blob2 18s infinite alternate ease-in-out;
+
+}
+
+.blob3{
+
+    background:#ec4899;
+
+    top:40%;
+
+    left:45%;
+
+    animation:blob3 16s infinite alternate ease-in-out;
+
+}
+
+/* -----------------------
+   Hero
+----------------------- */
+
+.hero{
+
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+.title{
+
+    font-size:clamp(4rem,11vw,8rem);
+
+    font-weight:900;
+
+    letter-spacing:-4px;
+
+}
+
+.subtitle{
+
+    color:#b8b8b8;
+
+    max-width:700px;
+
+    margin-top:25px;
+
+    font-size:1.25rem;
+
+    line-height:1.7;
+
+}
+
+.explore{
+
+    margin-top:55px;
+
+    padding:18px 42px;
+
+    border-radius:50px;
+
+    background:white;
+
+    color:black;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.explore:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 20px 45px rgba(255,255,255,.25);
+
+}
+
+/* -----------------------
+   Projects
+----------------------- */
+
+section{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    padding:100px 30px;
+
+}
+
+section h2{
+
+    font-size:3rem;
+
+    margin-bottom:50px;
+
+}
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:30px;
+
+}
+
+/* -----------------------
+   Card
+----------------------- */
+
+.card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:280px;
+
+    border-radius:28px;
+
+    text-decoration:none;
+
+    color:white;
+
+    padding:35px;
+
+    backdrop-filter:blur(16px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    transition:.35s;
+
+    transform-style:preserve-3d;
+
+}
+
+.card:hover{
+
+    transform:
+    translateY(-12px)
+    scale(1.03);
+
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+    rgba(255,255,255,.15),
+
+    transparent);
+
+    opacity:0;
+
+    transition:.4s;
+
+}
+
+.card:hover::before{
+
+    opacity:1;
+
+}
+
+.emoji{
+
+    font-size:3rem;
+
+}
+
+.card h3{
+
+    margin-top:18px;
+
+    font-size:2rem;
+
+}
+
+.card p{
+
+    margin-top:15px;
+
+    color:rgba(255,255,255,.9);
+
+    line-height:1.7;
+
+}
+
+.launch{
+
+    position:absolute;
+
+    bottom:35px;
+
+    font-weight:700;
+
+}
+
+/* -----------------------
+   Gradients
+----------------------- */
+
+.purple{
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #7c3aed,
+
+    #4f46e5);
+
+}
+
+.pink{
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #ec4899,
+
+    #fb7185);
+
+}
+
+.blue{
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #06b6d4,
+
+    #2563eb);
+
+}
+
+.orange{
+
+    color:#111;
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #f97316,
+
+    #facc15);
+
+}
+
+.green{
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #22c55e,
+
+    #15803d);
+
+}
+
+/* -----------------------
+   Footer
+----------------------- */
+
+footer{
+
+    text-align:center;
+
+    padding:70px;
+
+    color:#8b8b8b;
+
+}
+
+/* -----------------------
+   Animations
+----------------------- */
+
+@keyframes blob1{
+
+    from{
+
+        transform:
+        translate(0,0)
+        scale(1);
+
     }
 
-    target.innerHTML = html + (openSpan ? '</span>' : '');
-    i++;
-    setTimeout(typeNext, speed);
-  }
+    to{
 
-  typeNext();
-}
+        transform:
+        translate(160px,80px)
+        scale(1.25);
 
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
-/* ----------------------------------------------------------
-   Active tab tracking via IntersectionObserver
----------------------------------------------------------- */
-function initTabNav() {
-  const tabs = document.querySelectorAll('.tab');
-  const sections = Array.from(tabs)
-    .map(tab => document.querySelector(tab.getAttribute('href')))
-    .filter(Boolean);
-
-  if (!('IntersectionObserver' in window) || sections.length === 0) return;
-
-  const setActive = (id) => {
-    tabs.forEach(tab => {
-      tab.classList.toggle('is-active', tab.getAttribute('href') === `#${id}`);
-    });
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    // Pick the entry closest to the top that's currently intersecting.
-    const visible = entries.filter(e => e.isIntersecting);
-    if (visible.length > 0) {
-      visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-      setActive(visible[0].target.id);
-    }
-  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
-
-  sections.forEach(section => observer.observe(section));
-
-  // Close mobile menu on tab click
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => closeMobileMenu());
-  });
-}
-
-/* ----------------------------------------------------------
-   Mobile burger menu
----------------------------------------------------------- */
-function initMobileMenu() {
-  const burger = document.getElementById('burgerBtn');
-  const navTabs = document.getElementById('navTabs');
-  if (!burger || !navTabs) return;
-
-  burger.addEventListener('click', () => {
-    const isOpen = navTabs.classList.toggle('is-open');
-    burger.classList.toggle('is-open', isOpen);
-    burger.setAttribute('aria-expanded', String(isOpen));
-  });
-}
-
-function closeMobileMenu() {
-  const burger = document.getElementById('burgerBtn');
-  const navTabs = document.getElementById('navTabs');
-  if (!burger || !navTabs) return;
-  navTabs.classList.remove('is-open');
-  burger.classList.remove('is-open');
-  burger.setAttribute('aria-expanded', 'false');
-}
-
-/* ----------------------------------------------------------
-   Back-to-top button
----------------------------------------------------------- */
-function initBackToTop() {
-  const btn = document.getElementById('backToTop');
-  if (!btn) return;
-
-  window.addEventListener('scroll', () => {
-    btn.classList.toggle('is-visible', window.scrollY > 600);
-  }, { passive: true });
-
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-/* ----------------------------------------------------------
-   Contact form — client-side validation + simulated
-   terminal "send" sequence (no backend attached).
----------------------------------------------------------- */
-function initContactForm() {
-  const form = document.getElementById('contactForm');
-  if (!form) return;
-
-  const nameInput = document.getElementById('nameInput');
-  const emailInput = document.getElementById('emailInput');
-  const messageInput = document.getElementById('messageInput');
-  const output = document.getElementById('terminalOutput');
-  const sendBtn = document.getElementById('sendBtn');
-
-  const errors = {
-    name: document.getElementById('nameError'),
-    email: document.getElementById('emailError'),
-    message: document.getElementById('messageError'),
-  };
-
-  function validate() {
-    let valid = true;
-    errors.name.textContent = '';
-    errors.email.textContent = '';
-    errors.message.textContent = '';
-
-    if (!nameInput.value.trim()) {
-      errors.name.textContent = 'error: name cannot be empty';
-      valid = false;
     }
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailInput.value.trim() || !emailPattern.test(emailInput.value.trim())) {
-      errors.email.textContent = 'error: enter a valid email address';
-      valid = false;
+}
+
+@keyframes blob2{
+
+    from{
+
+        transform:
+        translate(0,0);
+
     }
 
-    if (!messageInput.value.trim() || messageInput.value.trim().length < 10) {
-      errors.message.textContent = 'error: message must be at least 10 characters';
-      valid = false;
+    to{
+
+        transform:
+        translate(-180px,-120px);
+
     }
 
-    return valid;
-  }
+}
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    output.textContent = '';
+@keyframes blob3{
 
-    if (!validate()) {
-      output.style.color = 'var(--accent-danger)';
-      output.textContent = '✗ validation failed — fix the fields above';
-      return;
+    from{
+
+        transform:
+        translate(0,0)
+        scale(1);
+
     }
 
-    sendBtn.disabled = true;
-    sendBtn.style.opacity = '0.6';
-    output.style.color = 'var(--accent-string)';
+    to{
 
-    // Simulated terminal sequence for feedback.
-    const sequence = [
-      '> connecting to mail server...',
-      '> authenticating...',
-      `> sending message from ${nameInput.value.trim()}...`,
-      '✓ message sent — thanks, I\'ll reply within 1-2 business days.',
-    ];
+        transform:
+        translate(100px,-80px)
+        scale(1.35);
 
-    let idx = 0;
-    output.textContent = sequence[0];
-    const interval = setInterval(() => {
-      idx++;
-      if (idx < sequence.length) {
-        output.textContent += '\n' + sequence[idx];
-      } else {
-        clearInterval(interval);
-        sendBtn.disabled = false;
-        sendBtn.style.opacity = '1';
-        form.reset();
-      }
-    }, 550);
-  });
+    }
 
-  // Clear individual field errors as the user types.
-  [nameInput, emailInput, messageInput].forEach(input => {
-    input.addEventListener('input', () => {
-      const key = input.name;
-      if (errors[key]) errors[key].textContent = '';
-    });
-  });
+}
+
+/* -----------------------
+   Responsive
+----------------------- */
+
+@media(max-width:900px){
+
+.title{
+
+font-size:4rem;
+
+}
+
+.subtitle{
+
+font-size:1rem;
+
+}
+
+section{
+
+padding:70px 20px;
+
+}
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+.card{
+
+min-height:240px;
+
+}
+
 }
