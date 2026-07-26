@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atharv Gupta — Computer Science Student</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ============ NAV : EDITOR TABS ============ -->
+<header class="tabbar" id="tabbar">
+  <div class="tabbar__brand">
+    <span class="brand__bracket">&lt;</span>AG<span class="brand__bracket">/&gt;</span>
+  </div>
+  <nav class="tabbar__tabs" id="navTabs">
+    <a href="#hero" class="tab" data-tab="hero"><span class="tab__dot dot--html"></span>hero.html</a>
+    <a href="#about" class="tab" data-tab="about"><span class="tab__dot dot--js"></span>about.js</a>
+    <a href="#skills" class="tab" data-tab="skills"><span class="tab__dot dot--json"></span>skills.json</a>
+    <a href="#experience" class="tab" data-tab="experience"><span class="tab__dot dot--md"></span>resume.md</a>
+    <a href="#contact" class="tab" data-tab="contact"><span class="tab__dot dot--sh"></span>contact.sh</a>
+  </nav>
+  <button class="tabbar__burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="editor-window hero__editor">
+      <div class="editor-window__chrome">
+        <div class="chrome__dots">
+          <span class="dot dot--red"></span>
+          <span class="dot dot--yellow"></span>
+          <span class="dot dot--green"></span>
+        </div>
+        <span class="chrome__filename">student.js</span>
+      </div>
+      <div class="editor-window__body">
+        <pre class="code-block" id="typedCode" aria-live="polite"></pre>
+        <span class="cursor-blink" id="cursorBlink">▍</span>
+      </div>
+    </div>
+
+    <div class="hero__side">
+      <p class="eyebrow">// computer science student</p>
+      <h1 class="hero__title">Still learning,<br>already <span class="accent-string">building.</span></h1>
+      <p class="hero__lede">I'm Atharv — a CS student based in Bangalore, curious about how the web works under the hood and always looking for the next thing to build or break.</p>
+      <div class="hero__cta">
+        <a href="#contact" class="btn btn--primary"><span class="btn__prompt">$</span> get_in_touch</a>
+        <a href="#experience" class="btn btn--ghost"><span class="btn__prompt">$</span> view_journey</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="section__head">
+      <span class="line-no">01</span>
+      <h2 class="section__title">about<span class="accent-func">.js</span></h2>
+    </div>
+
+    <div class="comment-block">
+      <p class="comment-line">/**</p>
+      <p class="comment-line"> * About Me</p>
+      <p class="comment-line"> * ------------------------------------------</p>
+      <p class="comment-body">Hi, I'm Atharv — a computer science student based in Bangalore, India. I'm still early in my journey, but I spend most of my free time picking apart how websites and apps are built, then trying to rebuild small versions of them myself.</p>
+      <p class="comment-body">I'm especially drawn to front-end development and the moment a UI finally does what it's supposed to. When I'm not coding, I'm usually reading about new tools, watching tech talks, or just staring at a bug until it makes sense.</p>
+      <p class="comment-line"> */</p>
+    </div>
+    <!-- TODO: replace the two paragraphs above with your real story -->
+
+    <div class="about-stats">
+      <div class="stat-card">
+        <span class="stat-card__value">1<span class="accent-string">st</span></span>
+        <span class="stat-card__label">year exploring code</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value">3<span class="accent-string">+</span></span>
+        <span class="stat-card__label">personal projects</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value">&infin;</span>
+        <span class="stat-card__label">curiosity to learn more</span>
+      </div>
+    </div>
+    <!-- TODO: swap these stats for real numbers once you have projects/years to show -->
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section class="section section--alt" id="skills">
+    <div class="section__head">
+      <span class="line-no">02</span>
+      <h2 class="section__title">skills<span class="accent-func">.json</span></h2>
+    </div>
+
+    <div class="json-block">
+      <p class="json-line">{</p>
+
+      <!-- TODO: this skill list is a generic student starter set — edit to match what you actually know -->
+      <div class="json-group">
+        <p class="json-key">&nbsp;&nbsp;"frontend": [</p>
+        <div class="tag-row" data-category="frontend">
+          <span class="tag tag--frontend">HTML / CSS</span>
+          <span class="tag tag--frontend">JavaScript</span>
+          <span class="tag tag--frontend">React (learning)</span>
+          <span class="tag tag--frontend">Responsive Design</span>
+        </div>
+        <p class="json-line">&nbsp;&nbsp;],</p>
+      </div>
+
+      <div class="json-group">
+        <p class="json-key">&nbsp;&nbsp;"core_cs": [</p>
+        <div class="tag-row" data-category="backend">
+          <span class="tag tag--backend">Python</span>
+          <span class="tag tag--backend">C / C++</span>
+          <span class="tag tag--backend">Data Structures</span>
+          <span class="tag tag--backend">SQL Basics</span>
+        </div>
+        <p class="json-line">&nbsp;&nbsp;],</p>
+      </div>
+
+      <div class="json-group">
+        <p class="json-key">&nbsp;&nbsp;"tooling": [</p>
+        <div class="tag-row" data-category="tooling">
+          <span class="tag tag--tooling">Git &amp; GitHub</span>
+          <span class="tag tag--tooling">VS Code</span>
+          <span class="tag tag--tooling">Linux Basics</span>
+        </div>
+        <p class="json-line">&nbsp;&nbsp;]</p>
+      </div>
+
+      <p class="json-line">}</p>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE / RESUME (git log) ============ -->
+  <section class="section" id="experience">
+    <div class="section__head">
+      <span class="line-no">03</span>
+      <h2 class="section__title">journey<span class="accent-func">.md</span></h2>
+    </div>
+    <p class="section__sub">$ git log --oneline --graph --all &nbsp;// education &amp; projects</p>
+
+    <div class="git-log">
+
+      <!-- TODO: this timeline is a placeholder — replace with your real degree, dates and any projects/internships -->
+      <div class="commit">
+        <div class="commit__rail">
+          <span class="commit__node"></span>
+          <span class="commit__line"></span>
+        </div>
+        <div class="commit__body">
+          <div class="commit__meta">
+            <span class="commit__hash">a3f9c12</span>
+            <span class="commit__branch">HEAD -&gt; main</span>
+            <span class="commit__date">Present</span>
+          </div>
+          <h3 class="commit__title">B.Tech, Computer Science <span class="accent-func">@ Your College Name</span></h3>
+          <ul class="commit__diff">
+            <li><span class="diff--add">+</span> Coursework in data structures, algorithms &amp; web development</li>
+            <li><span class="diff--add">+</span> Building small personal projects to learn by doing</li>
+            <li><span class="diff--add">+</span> Actively exploring front-end frameworks like React</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit__rail">
+          <span class="commit__node"></span>
+        </div>
+        <div class="commit__body">
+          <div class="commit__meta">
+            <span class="commit__hash">1f0a4d5</span>
+            <span class="commit__branch">tag: origin</span>
+            <span class="commit__date">Earlier</span>
+          </div>
+          <h3 class="commit__title">Started Learning to Code <span class="accent-func">@ Self-taught</span></h3>
+          <ul class="commit__diff">
+            <li><span class="diff--add">+</span> Learned HTML, CSS &amp; JavaScript fundamentals</li>
+            <li><span class="diff--add">+</span> Built first static websites and small scripts</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ CONTACT (terminal) ============ -->
+  <section class="section section--alt" id="contact">
+    <div class="section__head">
+      <span class="line-no">04</span>
+      <h2 class="section__title">contact<span class="accent-func">.sh</span></h2>
+    </div>
+
+    <div class="editor-window contact-window">
+      <div class="editor-window__chrome">
+        <div class="chrome__dots">
+          <span class="dot dot--red"></span>
+          <span class="dot dot--yellow"></span>
+          <span class="dot dot--green"></span>
+        </div>
+        <span class="chrome__filename">zsh — send-message</span>
+      </div>
+      <div class="editor-window__body contact-window__body">
+        <form id="contactForm" class="terminal-form" novalidate>
+
+          <div class="terminal-line">
+            <label class="terminal-prompt" for="nameInput">$ enter --name</label>
+            <input type="text" id="nameInput" name="name" class="terminal-input" placeholder="Jane Doe" autocomplete="name" required>
+            <span class="field-error" id="nameError"></span>
+          </div>
+
+          <div class="terminal-line">
+            <label class="terminal-prompt" for="emailInput">$ enter --email</label>
+            <input type="email" id="emailInput" name="email" class="terminal-input" placeholder="jane@example.com" autocomplete="email" required>
+            <span class="field-error" id="emailError"></span>
+          </div>
+
+          <div class="terminal-line terminal-line--block">
+            <label class="terminal-prompt" for="messageInput">$ enter --message</label>
+            <textarea id="messageInput" name="message" class="terminal-input terminal-textarea" rows="4" placeholder="Tell me about your project..." required></textarea>
+            <span class="field-error" id="messageError"></span>
+          </div>
+
+          <button type="submit" class="btn btn--primary" id="sendBtn">
+            <span class="btn__prompt">$</span> send --message
+          </button>
+
+          <div class="terminal-output" id="terminalOutput" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="socials">
+      <p class="socials__label">// find me elsewhere — Bangalore, India</p>
+      <div class="socials__list">
+        <!-- TODO: add your real GitHub / LinkedIn URLs once you have them -->
+        <a href="https://github.com" class="social-link" target="_blank" rel="noopener"><span class="accent-func">import</span> { GitHub } <span class="accent-func">from</span> <span class="accent-string">'social'</span></a>
+        <a href="https://linkedin.com" class="social-link" target="_blank" rel="noopener"><span class="accent-func">import</span> { LinkedIn } <span class="accent-func">from</span> <span class="accent-string">'social'</span></a>
+        <a href="mailto:Guptaatharv1109@gmail.com" class="social-link"><span class="accent-func">import</span> { Email } <span class="accent-func">from</span> <span class="accent-string">'Guptaatharv1109@gmail.com'</span></a>
+        <!-- TODO: replace the XXXXX below with your actual phone digits before publishing -->
+        <a href="tel:+9170229XXXXX" class="social-link"><span class="accent-func">import</span> { Phone } <span class="accent-func">from</span> <span class="accent-string">'+91 70229-XXXXX'</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>// EOF — © <span id="year"></span> Atharv Gupta. Built with HTML, CSS &amp; vanilla JS.</p>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<script src="script.js"></script>
+</body>
+</html>
