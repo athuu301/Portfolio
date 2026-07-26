@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Atharv Is Cool - Neal.fun style interactive web app playground and project showcase.">
+  <title>ATHARV IS COOL 🚀 Interactive Neal.fun Showcase</title>
+
+  <!-- Google Fonts: Space Grotesk, Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;800&family=Space+Grotesk:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Background Sparkle Particles Canvas -->
+  <canvas id="sparkleCanvas" class="sparkle-canvas"></canvas>
+
+  <!-- Top App Navigation Bar -->
+  <header class="app-header">
+    <div class="brand-title">
+      <span>✨</span> ATHARV.FUN
+    </div>
+
+    <div class="header-right-tools">
+      <span class="count-chip">🚀 5 COOL APPS</span>
+      <button id="audioToggleBtn" class="retro-btn">🔊 Sound On</button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-layout">
+    
+    <!-- Hero Header Banner -->
+    <section class="hero-section">
+      <h1 id="heroTitle" class="hero-header-text" title="Click for Sparkle Explosion!">
+        ATHARV IS COOL 🔥
+      </h1>
+      
+      <p class="hero-subtitle">
+        Welcome to Atharv's interactive web playground! Explore 3D arcade games, AI companions, food delivery platforms, and stealth heist adventures.
+      </p>
+
+      <!-- Interactive Coolness Multiplier Box -->
+      <div class="coolness-flex-box">
+        <span class="coolness-label">ATHARV'S COOLNESS LEVEL:</span>
+        <span id="coolnessVal" class="coolness-score">999,999</span>
+        <button id="flexCoolnessBtn" class="flex-btn-sparkle">FLEX +2,500 ✨</button>
+      </div>
+    </section>
+
+    <!-- Toolbar Filters & Search -->
+    <div class="toolbar-container">
+      <div class="filter-tags">
+        <button class="filter-btn active" data-category="All">All Apps</button>
+        <button class="filter-btn" data-category="Games">🎮 Games</button>
+        <button class="filter-btn" data-category="AI">🤖 AI</button>
+        <button class="filter-btn" data-category="App">🍔 Apps</button>
+        <button class="filter-btn" data-category="Fun">🍍 Fun</button>
+      </div>
+
+      <div class="search-input-box">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Search Atharv's apps..." />
+      </div>
+    </div>
+
+    <!-- Featured Projects Neal.fun 3D Cards Grid -->
+    <section id="projectsGrid" class="projects-grid">
+      <!-- 5 Interactive Project Cards render here via JS -->
+    </section>
+  </main>
+
+  <!-- Quick Live Iframe Preview Modal -->
+  <div id="previewModalOverlay" class="preview-modal-overlay hidden">
+    <div class="preview-modal-card">
+      <div class="preview-modal-header">
+        <div id="modalTitleText" class="modal-title">Live App Preview</div>
+        <div style="display: flex; gap: 10px;">
+          <a id="modalExternalBtn" href="#" target="_blank" class="retro-btn btn-launch" style="padding: 6px 14px; font-size: 12px;">
+            OPEN IN TAB ↗
+          </a>
+          <button id="closeModalBtn" class="retro-btn" style="padding: 6px 12px;">✖ CLOSE</button>
+        </div>
+      </div>
+      <iframe id="previewIframe" class="preview-iframe" src="about:blank"></iframe>
+    </div>
+  </div>
+
+  <!-- Game & App Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/particle.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
