@@ -1,20 +1,19 @@
 /**
- * Atharv Is Cool - Master App Controller & 3D Tilt Physics
+ * Atharv Is Cool - Master App Controller & Neal.fun Interactivity
  */
 
 const ATHARV_PROJECTS = [
   {
     id: 'chatbot',
-    title: 'AI ChatBot',
+    title: 'ChatBot',
     icon: '🤖',
     url: 'https://athuu301.github.io/ChatBot/',
     category: 'AI',
     tag: 'AI COMPANION',
     stars: '4.9',
-    badgeColor: '#8b5cf6',
-    gradient: 'linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(6, 182, 212, 0.15))',
-    borderColor: '#8b5cf6',
-    desc: 'An intelligent conversational AI assistant built with sleek chat UI, instant message processing, and smart prompt handling.'
+    badgeBg: '#c38fff',
+    badgeColor: '#0f172a',
+    desc: 'A conversational AI chatbot with a sleek modern interface, instant message processing, and smart prompt handling.'
   },
   {
     id: 'pineapple',
@@ -24,10 +23,9 @@ const ATHARV_PROJECTS = [
     category: 'Fun',
     tag: 'TROPICAL FUN',
     stars: '4.95',
-    badgeColor: '#f59e0b',
-    gradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(16, 185, 129, 0.15))',
-    borderColor: '#f59e0b',
-    desc: 'A vibrant tropical interactive web application featuring playful animations, retro aesthetics, and fun mini-games.'
+    badgeBg: '#ffde59',
+    badgeColor: '#0f172a',
+    desc: 'A fun interactive web experiment featuring tropical aesthetics, playful animations, and retro mini-games.'
   },
   {
     id: 'infinite_roads',
@@ -37,10 +35,9 @@ const ATHARV_PROJECTS = [
     category: 'Games',
     tag: '3D ARCADE GAME',
     stars: '5.0',
-    badgeColor: '#f43f5e',
-    gradient: 'linear-gradient(135deg, rgba(244, 63, 94, 0.25), rgba(168, 85, 247, 0.15))',
-    borderColor: '#f43f5e',
-    desc: 'An immersive 3D highway driving arcade game built with Three.js canvas, smooth vehicle steering, score tracking, and endless road obstacles.'
+    badgeBg: '#ff66c4',
+    badgeColor: '#0f172a',
+    desc: 'Endless 3D road driver visualizer inspired by retro arcade aesthetics, smooth vehicle steering, and highway obstacles.'
   },
   {
     id: 'food_app',
@@ -50,10 +47,9 @@ const ATHARV_PROJECTS = [
     category: 'App',
     tag: 'FOOD & DELIVERY',
     stars: '4.88',
-    badgeColor: '#fb923c',
-    gradient: 'linear-gradient(135deg, rgba(251, 146, 60, 0.25), rgba(236, 72, 153, 0.15))',
-    borderColor: '#fb923c',
-    desc: 'A full-featured food ordering platform with dish search, category filters, interactive cart management, and seamless order checkout.'
+    badgeBg: '#ff914d',
+    badgeColor: '#0f172a',
+    desc: 'Responsive food delivery platform with dish search, category filters, interactive cart management, and seamless checkout.'
   },
   {
     id: 'stealth_game',
@@ -63,37 +59,48 @@ const ATHARV_PROJECTS = [
     category: 'Games',
     tag: '2D STEALTH GAME',
     stars: '5.0',
-    badgeColor: '#06b6d4',
-    gradient: 'linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(99, 102, 241, 0.15))',
-    borderColor: '#06b6d4',
-    desc: 'An action-packed 2D Undertale-style pixel art stealth game where you infiltrate Metro University, avoid security guards, disable lasers, and hack the attendance terminal.'
+    badgeBg: '#5ce1e6',
+    badgeColor: '#0f172a',
+    desc: '2D Undertale-inspired campus stealth game where you infiltrate Metro University, avoid guards, disable lasers, and alter attendance.'
   }
 ];
 
 class AtharvFunApp {
   constructor() {
-    this.coolnessScore = 999999;
+    this.coolnessScore = 9999999;
     this.activeCategory = 'All';
     this.searchQuery = '';
+    this.currentTheme = 'light';
     
     this.init();
   }
 
   init() {
-    window.particleEngine.init('sparkleCanvas');
+    if (window.particleEngine) {
+      window.particleEngine.init('sparkleCanvas');
+    }
 
     this.bindEvents();
     this.renderProjectsGrid();
   }
 
   bindEvents() {
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    themeBtn?.addEventListener('click', () => {
+      this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', this.currentTheme);
+      themeBtn.textContent = this.currentTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      if (window.nealAudio) window.nealAudio.playClick();
+    });
+
     // Header Title Click -> Sparkle Explosion
     const heroTitle = document.getElementById('heroTitle');
     heroTitle?.addEventListener('click', (e) => {
       this.coolnessScore += 1000;
       this.updateCoolnessDisplay();
-      window.nealAudio.playFlex();
-      window.particleEngine.spawnBurst(e.clientX, e.clientY, 50);
+      if (window.nealAudio) window.nealAudio.playFlex();
+      if (window.particleEngine) window.particleEngine.spawnBurst(e.clientX, e.clientY, 50);
     });
 
     // Flex Coolness Button
@@ -101,25 +108,27 @@ class AtharvFunApp {
     flexBtn?.addEventListener('click', (e) => {
       this.coolnessScore += 2500;
       this.updateCoolnessDisplay();
-      window.nealAudio.playFlex();
-      window.particleEngine.spawnBurst(e.clientX, e.clientY, 40);
+      if (window.nealAudio) window.nealAudio.playFlex();
+      if (window.particleEngine) window.particleEngine.spawnBurst(e.clientX, e.clientY, 40);
     });
 
     // Audio Toggle
     const audioBtn = document.getElementById('audioToggleBtn');
     audioBtn?.addEventListener('click', () => {
-      const isMuted = window.nealAudio.toggleMute();
-      audioBtn.textContent = isMuted ? '🔇 Muted' : '🔊 Sound On';
+      if (window.nealAudio) {
+        const isMuted = window.nealAudio.toggleMute();
+        audioBtn.textContent = isMuted ? '🔇 Muted' : '🔊 Sound On';
+      }
     });
 
     // Filter Tag Buttons
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this.activeCategory = btn.getAttribute('data-category') || 'All';
-        window.nealAudio.playClick();
+        if (window.nealAudio) window.nealAudio.playClick();
         this.renderProjectsGrid();
       });
     });
@@ -162,10 +171,10 @@ class AtharvFunApp {
 
     if (filtered.length === 0) {
       container.innerHTML = `
-        <div class="no-results-box">
+        <div class="no-results-box" style="background: var(--card-bg); border: 3px solid var(--border-color); border-radius: 24px; padding: 48px; text-align: center;">
           <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
-          <h3>No projects found matching "${this.searchQuery}"</h3>
-          <p>Try searching for "game", "AI", "food", or clear the filter.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 22px;">No projects found matching "${this.searchQuery}"</h3>
+          <p style="color: var(--text-sub); margin-top: 8px;">Try searching for "game", "AI", "food", or clear filters.</p>
         </div>
       `;
       return;
@@ -174,15 +183,13 @@ class AtharvFunApp {
     filtered.forEach(p => {
       const card = document.createElement('div');
       card.className = 'project-card';
-      card.style.background = p.gradient;
-      card.style.borderColor = p.borderColor;
 
       card.innerHTML = `
-        <div class="card-header-badge-row">
-          <span class="card-tag" style="background: ${p.badgeColor}33; color: ${p.badgeColor}; border: 1px solid ${p.badgeColor}66;">
+        <div class="card-top-bar">
+          <span class="card-badge" style="background: ${p.badgeBg}; color: ${p.badgeColor};">
             ${p.tag}
           </span>
-          <span class="card-stars">⭐ ${p.stars}</span>
+          <span class="card-rating">⭐ ${p.stars}</span>
         </div>
 
         <div class="card-hero-icon">${p.icon}</div>
@@ -191,61 +198,57 @@ class AtharvFunApp {
         <p class="card-desc">${p.desc}</p>
 
         <div class="card-action-row">
-          <a href="${p.url}" target="_blank" class="retro-card-btn btn-launch">
-            LAUNCH APP 🚀
+          <a href="${p.url}" target="_blank" class="card-btn btn-launch">
+            LAUNCH 🚀
           </a>
-          <button class="retro-card-btn btn-preview" data-url="${p.url}" data-title="${p.title}">
+          <button class="card-btn btn-preview" data-url="${p.url}" data-title="${p.title}">
             PREVIEW 👁️
           </button>
         </div>
       `;
 
-      // 3D Tilt Effect on MouseMove
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        const rx = (-y / rect.height) * 16;
-        const ry = (x / rect.width) * 16;
-
-        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(10px)`;
-      });
-
       card.addEventListener('mouseenter', () => {
-        window.nealAudio.playHover();
+        if (window.nealAudio) window.nealAudio.playHover();
       });
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
-      });
-
-      // Handle Launch Sound & Preview Click
-      const launchBtn = card.querySelector('.btn-launch');
-      launchBtn?.addEventListener('click', () => {
-        window.nealAudio.playClick();
+      // Clicking whole card opens project link directly
+      card.addEventListener('click', (e) => {
+        // If preview button clicked, don't double open
+        if (e.target.closest('.btn-preview')) return;
+        if (window.nealAudio) window.nealAudio.playClick();
+        window.open(p.url, '_blank');
       });
 
       const previewBtn = card.querySelector('.btn-preview');
       previewBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.nealAudio.playClick();
-        this.openPreviewModal(p.url, p.title);
+        if (window.nealAudio) window.nealAudio.playClick();
+        this.openPreviewModal(p);
       });
 
       container.appendChild(card);
     });
   }
 
-  openPreviewModal(url, title) {
+  openPreviewModal(project) {
     const modal = document.getElementById('previewModalOverlay');
     const iframe = document.getElementById('previewIframe');
     const modalTitle = document.getElementById('modalTitleText');
+    const modalIcon = document.getElementById('modalIcon');
+    const modalTag = document.getElementById('modalTagText');
+    const modalDesc = document.getElementById('modalDescText');
     const openExternalBtn = document.getElementById('modalExternalBtn');
+    const fallbackLaunchBtn = document.getElementById('modalFallbackLaunchBtn');
 
     if (modal && iframe) {
-      if (modalTitle) modalTitle.textContent = title;
-      if (openExternalBtn) openExternalBtn.href = url;
-      iframe.src = url;
+      if (modalTitle) modalTitle.textContent = project.title;
+      if (modalIcon) modalIcon.textContent = project.icon;
+      if (modalTag) modalTag.textContent = project.tag;
+      if (modalDesc) modalDesc.textContent = project.desc;
+      if (openExternalBtn) openExternalBtn.href = project.url;
+      if (fallbackLaunchBtn) fallbackLaunchBtn.href = project.url;
+
+      iframe.src = project.url;
 
       modal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';

@@ -3,88 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Atharv Is Cool - Neal.fun style interactive web app playground and project showcase.">
+  <meta name="description" content="ATHARV IS COOL - A neal.fun style playground of interactive web games, AI companions, and web experiments.">
   <title>ATHARV IS COOL 🚀 Interactive Neal.fun Showcase</title>
 
-  <!-- Google Fonts: Space Grotesk, Outfit & Inter -->
+  <!-- Google Fonts: Space Grotesk & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;800&family=Space+Grotesk:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Space+Grotesk:wght@700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Background Sparkle Particles Canvas -->
+  <!-- Background Sparkle Canvas -->
   <canvas id="sparkleCanvas" class="sparkle-canvas"></canvas>
 
-  <!-- Top App Navigation Bar -->
+  <!-- Top App Navigation Header -->
   <header class="app-header">
-    <div class="brand-title">
-      <span>✨</span> ATHARV.FUN
+    <div class="brand-title" id="brandLogo">
+      <span class="logo-dot"></span> ATHARV.FUN
     </div>
 
     <div class="header-right-tools">
-      <span class="count-chip">🚀 5 COOL APPS</span>
-      <button id="audioToggleBtn" class="retro-btn">🔊 Sound On</button>
+      <span class="count-chip">🚀 5 FEATURED PROJECTS</span>
+      <button id="themeToggleBtn" class="neal-btn" title="Toggle Light/Dark Theme">🌙 Dark</button>
+      <button id="audioToggleBtn" class="neal-btn" title="Toggle Sound SFX">🔊 Sound On</button>
     </div>
   </header>
 
   <!-- Main Content Layout -->
   <main class="main-layout">
     
-    <!-- Hero Header Banner -->
+    <!-- Neal.fun Signature Hero Section -->
     <section class="hero-section">
       <h1 id="heroTitle" class="hero-header-text" title="Click for Sparkle Explosion!">
-        ATHARV IS COOL 🔥
+        ATHARV IS <span class="highlight-text">COOL.</span> 🔥
       </h1>
       
       <p class="hero-subtitle">
-        Welcome to Atharv's interactive web playground! Explore 3D arcade games, AI companions, food delivery platforms, and stealth heist adventures.
+        I build weird websites, games, experiments and random things on the internet.
       </p>
 
-      <!-- Interactive Coolness Multiplier Box -->
-      <div class="coolness-flex-box">
+      <!-- Interactive Coolness Flex Meter Widget -->
+      <div class="coolness-flex-widget">
         <span class="coolness-label">ATHARV'S COOLNESS LEVEL:</span>
-        <span id="coolnessVal" class="coolness-score">999,999</span>
-        <button id="flexCoolnessBtn" class="flex-btn-sparkle">FLEX +2,500 ✨</button>
+        <span id="coolnessVal" class="coolness-score">9,999,999</span>
+        <button id="flexCoolnessBtn" class="btn-flex-sparkle">FLEX +2,500 ✨</button>
       </div>
     </section>
 
     <!-- Toolbar Filters & Search -->
-    <div class="toolbar-container">
+    <div class="toolbar-container" id="projectsSection">
       <div class="filter-tags">
-        <button class="filter-btn active" data-category="All">All Apps</button>
+        <button class="filter-btn active" data-category="All">All Projects</button>
         <button class="filter-btn" data-category="Games">🎮 Games</button>
         <button class="filter-btn" data-category="AI">🤖 AI</button>
-        <button class="filter-btn" data-category="App">🍔 Apps</button>
+        <button class="filter-btn" data-category="App">🍕 Apps</button>
         <button class="filter-btn" data-category="Fun">🍍 Fun</button>
       </div>
 
       <div class="search-input-box">
         <span>🔍</span>
-        <input type="text" id="searchInput" placeholder="Search Atharv's apps..." />
+        <input type="text" id="searchInput" placeholder="Search Atharv's creations..." />
       </div>
     </div>
 
-    <!-- Featured Projects Neal.fun 3D Cards Grid -->
+    <!-- Featured Projects Neubrutalist Grid -->
     <section id="projectsGrid" class="projects-grid">
       <!-- 5 Interactive Project Cards render here via JS -->
     </section>
   </main>
 
-  <!-- Quick Live Iframe Preview Modal -->
+  <!-- Quick Live Preview & Showcase Modal -->
   <div id="previewModalOverlay" class="preview-modal-overlay hidden">
     <div class="preview-modal-card">
       <div class="preview-modal-header">
-        <div id="modalTitleText" class="modal-title">Live App Preview</div>
-        <div style="display: flex; gap: 10px;">
-          <a id="modalExternalBtn" href="#" target="_blank" class="retro-btn btn-launch" style="padding: 6px 14px; font-size: 12px;">
-            OPEN IN TAB ↗
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span id="modalIcon" style="font-size: 28px;">🚀</span>
+          <div>
+            <div id="modalTitleText" class="modal-title">Project Name</div>
+            <div id="modalTagText" style="font-size: 12px; color: var(--text-sub); font-weight: 700;">CATEGORY TAG</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <a id="modalExternalBtn" href="#" target="_blank" class="card-btn btn-launch" style="padding: 8px 18px; font-size: 13px;">
+            LAUNCH LIVE APP 🚀
           </a>
-          <button id="closeModalBtn" class="retro-btn" style="padding: 6px 12px;">✖ CLOSE</button>
+          <button id="closeModalBtn" class="neal-btn" style="padding: 8px 14px;">✕ CLOSE</button>
         </div>
       </div>
-      <iframe id="previewIframe" class="preview-iframe" src="about:blank"></iframe>
+
+      <div class="modal-body-container">
+        <!-- Live Iframe Overlay -->
+        <iframe id="previewIframe" class="preview-iframe" src="about:blank"></iframe>
+
+        <!-- Fallback Banner if Browser Restricts Frame -->
+        <div class="iframe-fallback-banner">
+          <div style="font-size: 42px; margin-bottom: 8px;">🌐</div>
+          <h3 style="font-family: var(--font-heading); font-size: 20px; color: var(--text-main);">LIVE APP LAUNCHER</h3>
+          <p id="modalDescText" style="color: var(--text-sub); font-size: 14px; max-width: 500px; margin: 8px auto 16px auto; line-height: 1.5;">
+            Click below to open this project live in a new tab!
+          </p>
+          <a id="modalFallbackLaunchBtn" href="#" target="_blank" class="card-btn btn-launch" style="display: inline-flex; padding: 12px 28px; font-size: 15px;">
+            OPEN LIVE APP IN NEW TAB 🚀
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
